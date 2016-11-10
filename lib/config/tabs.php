@@ -68,6 +68,10 @@ class Tabs
 		];
 	}
 
+	/**
+	 * @return array
+	 * @author Pavel Shulaev (http://rover-it.me)
+	 */
 	protected static function getMain()
 	{
 		return [
@@ -120,17 +124,18 @@ class Tabs
 					'label'     => Loc::getMessage('preset__header_common_label')
 				],
 				[
+					'type'      => Input::TYPE__TEXT,
+					'name'      => self::INPUT__PRESET_NAME,
+					'label'     => Loc::getMessage(self::INPUT__PRESET_NAME . '_label'),
+					'size'      => 35
+				],
+				[
 					'type'      => Input::TYPE__CHECKBOX,
 					'name'      => self::INPUT__PRESET_ENABLED,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_ENABLED . '_label'),
 					'default'   => 'Y'
 				],
 				/*[
-					'type'      => Input::TYPE__TEXT,
-					'name'      => self::INPUT__PRESET_NAME,
-					'label'     => Loc::getMessage(self::INPUT__PRESET_NAME . '_label'),
-				],
-				[
 					'type'      => Input::TYPE__TEXT,
 					'name'      => self::INPUT__PRESET_SORT,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_SORT . '_label'),
@@ -152,14 +157,16 @@ class Tabs
 					'name'      => self::INPUT__PRESET_JOIN_SYS_JOIN_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_JOIN_SYS_JOIN_WORK . '_label'),
 					'options'   => Socialnetwork::getWorkGroups(),
-					'multiple'  => true
+					'multiple'  => true,
+					'size'      => 5,
 				],
 				[
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_JOIN_SYS_LEAVE_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_JOIN_SYS_LEAVE_WORK . '_label'),
 					'options'   => Socialnetwork::getWorkGroups(),
-					'multiple'  => true
+					'multiple'  => true,
+					'size'      => 5,
 				],
 				[
 					'type'      => Input::TYPE__HEADER,
@@ -171,14 +178,16 @@ class Tabs
 					'name'      => self::INPUT__PRESET_LEAVE_SYS_LEAVE_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_LEAVE_SYS_LEAVE_WORK . '_label'),
 					'options'   => Socialnetwork::getWorkGroups(),
-					'multiple'  => true
+					'multiple'  => true,
+					'size'      => 5,
 				],
 				[
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_LEAVE_SYS_JOIN_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_LEAVE_SYS_JOIN_WORK . '_label'),
 					'options'   => Socialnetwork::getWorkGroups(),
-					'multiple'  => true
+					'multiple'  => true,
+					'size'      => 5,
 				],
 				[
 					'type'      => Input::TYPE__HEADER,

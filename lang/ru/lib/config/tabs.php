@@ -23,17 +23,17 @@ $MESS[Tabs::TAB__PRESET . '_label']         = 'Правило';
 $MESS[Tabs::TAB__PRESET . '_description']   = 'Настройки правила';
 
 $MESS['preset__header_common_label']            = 'Общие';
-$MESS[Tabs::INPUT__PRESET_ENABLED . '_label']   = 'Включен';
-/*$MESS[Tabs::INPUT__PRESET_NAME . '_label']   = 'Включен';
-$MESS[Tabs::INPUT__PRESET_SORT . '_label']   = 'Включен';*/
+$MESS[Tabs::INPUT__PRESET_ENABLED . '_label']   = 'Включено';
+$MESS[Tabs::INPUT__PRESET_NAME . '_label']      = 'Название правила';
+/*$MESS[Tabs::INPUT__PRESET_SORT . '_label']   = 'Включен';*/
 $MESS[Tabs::INPUT__PRESET_GROUP . '_label']     = 'Применяется к группе';
 
 $MESS['preset__header_join_sys_label']                      = 'При присоединении к системной группе и обновлении';
-$MESS[Tabs::INPUT__PRESET_JOIN_SYS_JOIN_WORK . '_label']    = 'Рабочие группы, в которые вступает пользователь';
+$MESS[Tabs::INPUT__PRESET_JOIN_SYS_JOIN_WORK . '_label']    = 'Рабочие группы, к которым присоединяется пользователь';
 $MESS[Tabs::INPUT__PRESET_JOIN_SYS_LEAVE_WORK . '_label']   = 'Рабочие группы, из которых выходит пользователь';
 
 $MESS['preset__header_leave_sys_label']                     = 'При выходе из системной группы';
-$MESS[Tabs::INPUT__PRESET_LEAVE_SYS_JOIN_WORK . '_label']   = 'Рабочие группы, в которые вступает пользователь';
+$MESS[Tabs::INPUT__PRESET_LEAVE_SYS_JOIN_WORK . '_label']   = 'Рабочие группы, к которым присоединяется пользователь';
 $MESS[Tabs::INPUT__PRESET_LEAVE_SYS_LEAVE_WORK . '_label']  = 'Рабочие группы, из которых выходит пользователь';
 
 $MESS['preset__header_remove_label']            = 'Удалить правило';

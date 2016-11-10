@@ -16,6 +16,7 @@ class Disc
 {
 	const DISC_CONNECTED      = 'connected';    // флаг подключения диска
 	const DISC_DISCONNECTED   = 'disconnected'; // флаг отключения диска
+
 	/**
 	 * Подключаем диск
 	 * @param $userId

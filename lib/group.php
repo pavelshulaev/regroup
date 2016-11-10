@@ -171,8 +171,11 @@ class Group
 	 */
 	private static function getUserInWorkGroup($userId, $workGroupId)
 	{
+		if (!$userId)
+			throw new ArgumentNullException('userId');
+
 		if (!$workGroupId)
-			throw new ArgumentNullException('socNetGroupId');
+			throw new ArgumentNullException('workGroupId');
 
 		return \CSocNetUserToGroup::GetList(
 			["ID" => "ASC"],
