@@ -5,7 +5,7 @@
  * Date: 01.03.2016
  * Time: 12:09
  *
- * @author Shulaev (pavel.shulaev@gmail.com)
+ * @author Pavel Shulaev (http://rover-it.me)
  */
 
 namespace Rover\Regroup;
@@ -26,7 +26,7 @@ class Notifier
 	 * @param      $socNetGroupId
 	 * @param      $status
 	 * @return bool|int
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function notify($userId, $socNetGroupId, $status)
 	{
@@ -80,7 +80,7 @@ class Notifier
 	 * Возвращает ссылку на группу в BB кодах
 	 * @param $socNetGroupId
 	 * @return string
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private static function getGroupBBLink($socNetGroupId)
 	{

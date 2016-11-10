@@ -5,7 +5,7 @@
  * Date: 29.02.2016
  * Time: 21:56
  *
- * @author Shulaev (pavel.shulaev@gmail.com)
+ * @author Pavel Shulaev (http://rover-it.me)
  */
 
 namespace Rover\Regroup;
@@ -18,7 +18,7 @@ class Events
 	protected static $groups = [];
 	/**
 	 * @throws ArgumentNullException
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function update()
 	{
@@ -31,7 +31,7 @@ class Events
 	/**
 	 * Применяем правила по всем пришедшим группам
 	 * @param $params
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function onAfterUserAdd($params)
 	{
@@ -45,7 +45,7 @@ class Events
 	/**
 	 * @param $params
 	 * @throws ArgumentNullException
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function onBeforeUserUpdate($params)
 	{
@@ -70,7 +70,7 @@ class Events
 	 * Возвращает айдишники групп пользователя после обновления
 	 * @param $params
 	 * @return array
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	protected static function getUpdatedGroupsIds($params)
 	{
@@ -94,7 +94,7 @@ class Events
 	 * @param $userId
 	 * @return array
 	 * @throws ArgumentNullException
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function getUserGroupsIds($userId)
 	{
@@ -109,7 +109,7 @@ class Events
 
 	/**
 	 * @return array
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function getAllUsersIds()
 	{

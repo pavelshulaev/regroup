@@ -5,7 +5,7 @@
  * Date: 01.03.2016
  * Time: 12:31
  *
- * @author Shulaev (pavel.shulaev@gmail.com)
+ * @author Pavel Shulaev (http://rover-it.me)
  */
 
 namespace Rover\Regroup\Config;
@@ -13,12 +13,7 @@ namespace Rover\Regroup\Config;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\SystemException;
 use Rover\Fadmin\Inputs\Input;
-use Rover\Params\Main;
-use Rover\Params\Socialnetwork;
 use Bitrix\Main\Loader;
-
-if (!Loader::includeModule('rover.params'))
-	throw new SystemException('rover.params module not found!');
 
 Loc::loadMessages(__FILE__);
 
@@ -58,7 +53,7 @@ class Tabs
 
 	/**
 	 * @return array
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function get()
 	{
@@ -108,7 +103,7 @@ class Tabs
 
 	/**
 	 * @return array
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	protected static function getPreset()
 	{
@@ -145,7 +140,7 @@ class Tabs
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_GROUP,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_GROUP . '_label'),
-					'options'   => Main::getSysGroups(true)
+					'options'   => self::getSysGroups()
 				],
 				[
 					'type'      => Input::TYPE__HEADER,
@@ -156,7 +151,7 @@ class Tabs
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_JOIN_SYS_JOIN_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_JOIN_SYS_JOIN_WORK . '_label'),
-					'options'   => Socialnetwork::getWorkGroups(),
+					'options'   => self::getWorkGroups(),
 					'multiple'  => true,
 					'size'      => 5,
 				],
@@ -164,7 +159,7 @@ class Tabs
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_JOIN_SYS_LEAVE_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_JOIN_SYS_LEAVE_WORK . '_label'),
-					'options'   => Socialnetwork::getWorkGroups(),
+					'options'   => self::getWorkGroups(),
 					'multiple'  => true,
 					'size'      => 5,
 				],
@@ -177,7 +172,7 @@ class Tabs
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_LEAVE_SYS_LEAVE_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_LEAVE_SYS_LEAVE_WORK . '_label'),
-					'options'   => Socialnetwork::getWorkGroups(),
+					'options'   => self::getWorkGroups(),
 					'multiple'  => true,
 					'size'      => 5,
 				],
@@ -185,7 +180,7 @@ class Tabs
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_LEAVE_SYS_JOIN_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_LEAVE_SYS_JOIN_WORK . '_label'),
-					'options'   => Socialnetwork::getWorkGroups(),
+					'options'   => self::getWorkGroups(),
 					'multiple'  => true,
 					'size'      => 5,
 				],
@@ -202,5 +197,59 @@ class Tabs
 				]
 			]
 		];
+	}
+
+	/**
+	 * @return array
+	 * @throws \Bitrix\Main\ArgumentException
+	 * @author Pavel Shulaev (http://rover-it.me)
+	 */
+	public static function getSysGroups()
+	{
+		if (is_null(self::$sysGroups)) {
+			$query = [
+				'order' => ['ID' => 'ASC'],
+				'select' => ['ID', 'NAME']
+			];
+
+			$sysGroups  = \Bitrix\Main\GroupTable::getList($query);
+			self::$sysGroups     = [];
+
+			while($sysGroup = $sysGroups->fetch())
+				self::$sysGroups[$sysGroup['ID']]
+					= $sysGroup['NAME'] . ' [' . $sysGroup['ID'] . ']';
+		}
+
+		return self::$sysGroups;
+	}
+
+	/**
+	 * @return array
+	 * @throws SystemException
+	 * @throws \Bitrix\Main\ArgumentException
+	 * @throws \Bitrix\Main\LoaderException
+	 * @author Pavel Shulaev (http://rover-it.me)
+	 */
+	public static function getWorkGroups()
+	{
+		if (!Loader::includeModule('socialnetwork'))
+			throw new SystemException('Socialnetworl module not found');
+
+		if (is_null(self::$workGroups)) {
+
+			$query = [
+				'order'     => ['ID' => 'ASC'],
+				'select'    => ['ID', 'NAME']
+			];
+
+			$workGroups = \Bitrix\Socialnetwork\WorkgroupTable::getList($query);
+			self::$workGroups = [0 => Loc::getMessage('REGROUP__NOT_SET')];
+
+			while($workGroup = $workGroups->fetch())
+				self::$workGroups[$workGroup['ID']]
+					= $workGroup['NAME'] . ' [' . $workGroup['ID'] . ']';
+		}
+
+		return self::$workGroups;
 	}
 }

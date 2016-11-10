@@ -5,7 +5,7 @@
  * Date: 01.03.2016
  * Time: 15:11
  *
- * @author Shulaev (pavel.shulaev@gmail.com)
+ * @author Pavel Shulaev (http://rover-it.me)
  */
 
 namespace Rover\Regroup;
@@ -26,7 +26,7 @@ class Group
 	 * @param array $joinedSysGroups
 	 * @param array $leavedSysGroups
 	 * @throws ArgumentNullException
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function apply($userId, $joinedSysGroups = [], $leavedSysGroups = [])
 	{
@@ -56,7 +56,7 @@ class Group
 	 * @param array  $leavedSysGroups
 	 * @param string $query
 	 * @return array
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	protected static function getWorkGroups($joinedSysGroups = [], $leavedSysGroups = [], $query = self::QUERY__WORK_JOIN)
 	{
@@ -74,7 +74,7 @@ class Group
 	 * @param string $query
 	 * @return array
 	 * @throws \Bitrix\Main\ArgumentOutOfRangeException
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	protected static function getWorkGroupsBySysGroups($sysGroups, $event = self::EVENT__SYS_JOIN, $query = self::QUERY__WORK_JOIN)
 	{
@@ -93,7 +93,7 @@ class Group
 	 * Добавляет пользователя к группам социальной сети
 	 * @param $userId
 	 * @param $workGroupsIds
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private function addToWorkGroups($userId, $workGroupsIds)
 	{
@@ -129,7 +129,7 @@ class Group
 	 * Удаляет полльзователя из групп социальной сети
 	 * @param $userId
 	 * @param $workGroupsIds
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private function removeFromWorkGroups($userId, $workGroupsIds)
 	{
@@ -167,14 +167,14 @@ class Group
 	 * @param $workGroupId
 	 * @return array
 	 * @throws ArgumentNullException
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private static function getUserInWorkGroup($userId, $workGroupId)
 	{
 		if (!$userId)
 			throw new ArgumentNullException('userId');
 
-		if (!$workGroupId)
+		if (is_null($workGroupId))
 			throw new ArgumentNullException('workGroupId');
 
 		return \CSocNetUserToGroup::GetList(

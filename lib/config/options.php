@@ -6,7 +6,7 @@ namespace Rover\Regroup\Config;
  * Date: 29.02.2016
  * Time: 21:56
  *
- * @author Shulaev (pavel.shulaev@gmail.com)
+ * @author Pavel Shulaev (http://rover-it.me)
  */
 
 use Bitrix\Main\SystemException;
@@ -42,7 +42,7 @@ class Options extends FadminOptions
 
 	/**
 	 * @return static
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function getInstance()
 	{
@@ -51,7 +51,7 @@ class Options extends FadminOptions
 
 	/**
 	 * @return array
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getConfig()
 	{
@@ -66,7 +66,7 @@ class Options extends FadminOptions
 	 * Возвращает детальное описание рабочей группы по ее ид
 	 * @param $groupId
 	 * @return mixed
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getSocNetGroupById($groupId)
 	{
@@ -78,7 +78,7 @@ class Options extends FadminOptions
 
 	/**
 	 * @return mixed|null
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getLeaveModerators()
 	{
@@ -87,7 +87,7 @@ class Options extends FadminOptions
 
 	/**
 	 * @return mixed|null
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getConnectDisc()
 	{
@@ -97,7 +97,7 @@ class Options extends FadminOptions
 	/**
 	 * @param $presetId
 	 * @return mixed|null
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getPresetEnabled($presetId)
 	{
@@ -107,7 +107,7 @@ class Options extends FadminOptions
 	/**
 	 * @param $presetId
 	 * @return mixed|null
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getPresetGroup($presetId)
 	{
@@ -117,7 +117,7 @@ class Options extends FadminOptions
 	/**
 	 * @param $presetId
 	 * @return mixed|null
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getPresetJoinSysJoinWork($presetId)
 	{
@@ -127,7 +127,7 @@ class Options extends FadminOptions
 	/**
 	 * @param $presetId
 	 * @return mixed|null
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getPresetJoinSysLeaveWork($presetId)
 	{
@@ -137,7 +137,7 @@ class Options extends FadminOptions
 	/**
 	 * @param $presetId
 	 * @return mixed|null
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getPresetLeaveSysJoinWork($presetId)
 	{
@@ -147,7 +147,7 @@ class Options extends FadminOptions
 	/**
 	 * @param $presetId
 	 * @return mixed|null
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public function getPresetLeaveSysLeaveWork($presetId)
 	{
@@ -155,9 +155,9 @@ class Options extends FadminOptions
 	}
 
 	/**
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
-	protected function beforeRequest()
+	protected function beforeGetRequest()
 	{
 		$request = \Bitrix\Main\Application::getInstance()
 			->getContext()->getRequest();
@@ -170,7 +170,7 @@ class Options extends FadminOptions
 
 	/**
 	 * @param $params
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	protected function beforeGetTabInfo(array &$params)
 	{

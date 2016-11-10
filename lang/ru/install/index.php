@@ -1,8 +1,8 @@
 <?php
 $MESS ['rover_regroup__name']				= "Перегруппировка";
 $MESS ['rover_regroup__descr']				= "Создает правила для автоматического приема и исключения из рабочих групп социальной сети в зависимости от системной группы пользователя";
-$MESS ['rover_regroup__partner_name']		= "Шулаев Павел";
-$MESS ['rover_regroup__partner_uri']		= "mailto:pavel.shulaev@gmail.com";
+$MESS ['rover_regroup__partner_name']		= "Павел Шулаев";
+$MESS ['rover_regroup__partner_uri']		= "http://rover-it.me";
 
 $MESS ['rover_regroup__reference_deny']		= "Запрещено";
 $MESS ['rover_regroup__reference_read']		= "Чтение";

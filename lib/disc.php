@@ -5,7 +5,7 @@
  * Date: 01.03.2016
  * Time: 1:44
  *
- * @author Shulaev (pavel.shulaev@gmail.com)
+ * @author Pavel Shulaev (http://rover-it.me)
  */
 
 namespace Rover\Regroup;
@@ -22,7 +22,7 @@ class Disc
 	 * @param $userId
 	 * @param $socNetGroupId
 	 * @return bool|int
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function connect($userId, $socNetGroupId)
 	{
@@ -59,7 +59,7 @@ class Disc
 	 * @param $userId
 	 * @param $socNetGroupId
 	 * @return bool
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function disconnect($userId, $socNetGroupId)
 	{
@@ -88,7 +88,7 @@ class Disc
 	 * @param $userId
 	 * @param $socNetGroupId
 	 * @return bool
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private static function checkFields($userId, $socNetGroupId)
 	{
@@ -103,7 +103,7 @@ class Disc
 	 * @param $userId
 	 * @param $socNetGroupId
 	 * @return array|bool
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private static function getParams($userId, $socNetGroupId)
 	{
@@ -131,7 +131,7 @@ class Disc
 	 * Получаем координаты в инфоблоках для группы
 	 * @param $params
 	 * @return bool
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private static function getAttachSectionData($params)
 	{
@@ -162,7 +162,7 @@ class Disc
 	 * Получаем расположение в инфоблоках юзера
 	 * @param $params
 	 * @return array
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private static function getTargetSectionData($params)
 	{

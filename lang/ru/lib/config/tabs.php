@@ -5,7 +5,7 @@
  * Date: 01.03.2016
  * Time: 13:02
  *
- * @author Shulaev (pavel.shulaev@gmail.com)
+ * @author Pavel Shulaev (http://rover-it.me)
  */
 use Rover\Regroup\Config\Tabs;
 
@@ -39,3 +39,4 @@ $MESS[Tabs::INPUT__PRESET_LEAVE_SYS_LEAVE_WORK . '_label']  = 'Рабочие г
 $MESS['preset__header_remove_label']            = 'Удалить правило';
 $MESS[Tabs::INPUT__PRESET_REMOVE . '_label']    = 'Удалить';
 $MESS[Tabs::INPUT__PRESET_REMOVE . '_popup']    = 'Вы уверены, что хотите удалить это правило?';
+$MESS['REGROUP__NOT_SET'] = '(не задано)';

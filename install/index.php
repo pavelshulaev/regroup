@@ -7,12 +7,12 @@ Loc::loadMessages(__FILE__);
 
 class rover_regroup extends CModule
 {
-    public $MODULE_ID	= "rover.regroup";
-    public $MODULE_VERSION;
-    public $MODULE_VERSION_DATE;
-    public $MODULE_NAME;
-    public $MODULE_DESCRIPTION;
-    public $MODULE_GROUP_RIGHTS = "Y";
+    var $MODULE_ID	= "rover.regroup";
+    var $MODULE_VERSION;
+    var $MODULE_VERSION_DATE;
+    var $MODULE_NAME;
+    var $MODULE_DESCRIPTION;
+    var $MODULE_GROUP_RIGHTS = "Y";
 
     protected $errors = [];
 
@@ -21,14 +21,14 @@ class rover_regroup extends CModule
      */
     function __construct()
     {
-		$moduleVersion = [];
+		$arModuleVersion = [];
 
         require(__DIR__ . "/version.php");
 
-		if (is_array($moduleVersion) && array_key_exists("VERSION", $moduleVersion))
+		if (is_array($arModuleVersion) && array_key_exists("VERSION", $arModuleVersion))
         {
-			$this->MODULE_VERSION		= $moduleVersion["VERSION"];
-			$this->MODULE_VERSION_DATE	= $moduleVersion["VERSION_DATE"];
+			$this->MODULE_VERSION		= $arModuleVersion["VERSION"];
+			$this->MODULE_VERSION_DATE	= $arModuleVersion["VERSION_DATE"];
         } else
 	        $this->errors[] = Loc::getMessage('rover_regroup__version_info_error');
 
@@ -39,7 +39,7 @@ class rover_regroup extends CModule
 	}
 
     /**
-     * @author Shulaev (pavel.shulaev@gmail.com)
+     * @author Pavel Shulaev (http://rover-it.me)
      */
     function DoInstall()
     {
@@ -51,7 +51,7 @@ class rover_regroup extends CModule
 	}
 
     /**
-     * @author Shulaev (pavel.shulaev@gmail.com)
+     * @author Pavel Shulaev (http://rover-it.me)
      */
     function DoUninstall()
     {
@@ -64,7 +64,7 @@ class rover_regroup extends CModule
 
     /**
      * @return array
-     * @author Shulaev (pavel.shulaev@gmail.com)
+     * @author Pavel Shulaev (http://rover-it.me)
      */
     function GetModuleRightsList()
     {
@@ -80,12 +80,15 @@ class rover_regroup extends CModule
 
 	/**
 	 * Инсталляция файлов и зависимотей, регистрация модуля
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private function ProcessInstall()
     {
-	    if(false == \Bitrix\Main\ModuleManager::isModuleInstalled('rover.fadmin'))
+	    if(!ModuleManager::isModuleInstalled('rover.fadmin'))
 		    $this->errors[] = 'Module "rover.fadmin" is not installed';
+
+        if(!ModuleManager::isModuleInstalled('socialnetwork'))
+		    $this->errors[] = 'Module "socialnetwork" is not installed';
 
 	    if (empty($this->errors)){
             ModuleManager::registerModule($this->MODULE_ID);
@@ -99,7 +102,7 @@ class rover_regroup extends CModule
     }
 
     /**
-     * @author Shulaev (pavel.shulaev@gmail.com)
+     * @author Pavel Shulaev (http://rover-it.me)
      */
     protected function registerEvents()
     {
@@ -111,7 +114,7 @@ class rover_regroup extends CModule
 
 	/**
 	 * Удаление файлов и зависимостей. Снятие модуля с регистрации
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	private function ProcessUninstall()
 	{
@@ -125,7 +128,7 @@ class rover_regroup extends CModule
 	}
 
     /**
-     * @author Shulaev (pavel.shulaev@gmail.com)
+     * @author Pavel Shulaev (http://rover-it.me)
      */
     protected function unRegisterEvents()
     {

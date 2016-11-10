@@ -5,7 +5,7 @@
  * Date: 01.03.2016
  * Time: 15:15
  *
- * @author Shulaev (pavel.shulaev@gmail.com)
+ * @author Pavel Shulaev (http://rover-it.me)
  */
 
 namespace Rover\Regroup;
@@ -20,7 +20,7 @@ class Presets
 	 * —читаем, что список всех пресетов уже создан
 	 * @param $sysGroupsIds - группы, в которые входит пользователь
 	 * @return array - массив пресетов, действующих на пользовател€
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function getBySysGroupsIds(array $sysGroupsIds = [])
 	{
@@ -51,7 +51,7 @@ class Presets
 	 * @param string $query
 	 * @return mixed
 	 * @throws ArgumentOutOfRangeException
-	 * @author Shulaev (pavel.shulaev@gmail.com)
+	 * @author Pavel Shulaev (http://rover-it.me)
 	 */
 	public static function getWorkGroups($presetId, $event = Group::EVENT__SYS_JOIN, $query = Group::QUERY__WORK_JOIN)
 	{
