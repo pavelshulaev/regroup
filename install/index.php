@@ -14,14 +14,14 @@ class rover_regroup extends CModule
     var $MODULE_DESCRIPTION;
     var $MODULE_GROUP_RIGHTS = "Y";
 
-    protected $errors = [];
-
     /**
-     *
+     * @var array
      */
+    protected $errors = array();
+
     function __construct()
     {
-		$arModuleVersion = [];
+		$arModuleVersion = array();
 
         require(__DIR__ . "/version.php");
 
@@ -69,12 +69,12 @@ class rover_regroup extends CModule
     function GetModuleRightsList()
     {
         return array(
-            "reference_id" => ["D", "R", "W"],
-            "reference" => [
+            "reference_id" => array("D", "R", "W"),
+            "reference" => array(
                 Loc::getMessage('rover_regroup__reference_deny'),
                 Loc::getMessage('rover_regroup__reference_read'),
                 Loc::getMessage('rover_regroup__reference_write')
-            ]
+            )
         );
     }
 
@@ -84,11 +84,14 @@ class rover_regroup extends CModule
 	 */
 	private function ProcessInstall()
     {
+        if (PHP_VERSION_ID < 50400)
+            $this->errors[] = Loc::getMessage('rover_regroup__php_version_error');
+
 	    if(!ModuleManager::isModuleInstalled('rover.fadmin'))
-		    $this->errors[] = 'Module "rover.fadmin" is not installed';
+		    $this->errors[] = Loc::getMessage('rover_regroup__rover-fadmin_not_found');
 
         if(!ModuleManager::isModuleInstalled('socialnetwork'))
-		    $this->errors[] = 'Module "socialnetwork" is not installed';
+		    $this->errors[] = Loc::getMessage('rover_regroup__socialnetwork_not_found');
 
 	    if (empty($this->errors)){
             ModuleManager::registerModule($this->MODULE_ID);
