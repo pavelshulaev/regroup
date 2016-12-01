@@ -5,6 +5,11 @@ use Bitrix\Main\EventManager;
 
 Loc::loadMessages(__FILE__);
 
+/**
+ * Class rover_regroup
+ *
+ * @author Pavel Shulaev (http://rover-it.me)
+ */
 class rover_regroup extends CModule
 {
     var $MODULE_ID	= "rover.regroup";
@@ -17,10 +22,10 @@ class rover_regroup extends CModule
     /**
      * @var array
      */
-    protected $errors = array();
-
     function __construct()
     {
+        global $errors;
+
 		$arModuleVersion = array();
 
         require(__DIR__ . "/version.php");
@@ -30,7 +35,7 @@ class rover_regroup extends CModule
 			$this->MODULE_VERSION		= $arModuleVersion["VERSION"];
 			$this->MODULE_VERSION_DATE	= $arModuleVersion["VERSION_DATE"];
         } else
-	        $this->errors[] = Loc::getMessage('rover_regroup__version_info_error');
+	        $errors[] = Loc::getMessage('rover_regroup__version_info_error');
 
         $this->MODULE_NAME			= Loc::getMessage('rover_regroup__name');
         $this->MODULE_DESCRIPTION	= Loc::getMessage('rover_regroup__descr');
@@ -84,22 +89,21 @@ class rover_regroup extends CModule
 	 */
 	private function ProcessInstall()
     {
+        global $APPLICATION, $errors;
+
         if (PHP_VERSION_ID < 50400)
-            $this->errors[] = Loc::getMessage('rover_regroup__php_version_error');
+            $errors[] = Loc::getMessage('rover_regroup__php_version_error');
 
 	    if(!ModuleManager::isModuleInstalled('rover.fadmin'))
-		    $this->errors[] = Loc::getMessage('rover_regroup__rover-fadmin_not_found');
+		    $errors[] = Loc::getMessage('rover_regroup__rover-fadmin_not_found');
 
         if(!ModuleManager::isModuleInstalled('socialnetwork'))
-		    $this->errors[] = Loc::getMessage('rover_regroup__socialnetwork_not_found');
+		    $errors[] = Loc::getMessage('rover_regroup__socialnetwork_not_found');
 
-	    if (empty($this->errors)){
+	    if (empty($errors)){
             ModuleManager::registerModule($this->MODULE_ID);
 	        $this->registerEvents();
 	    }
-
-        global $APPLICATION, $errors;
-        $errors = $this->errors;
 
         $APPLICATION->IncludeAdminFile(Loc::getMessage("rover_regroup__install_title"), $_SERVER['DOCUMENT_ROOT'] . getLocalPath("modules/". $this->MODULE_ID ."/install/message.php"));
     }
@@ -121,11 +125,10 @@ class rover_regroup extends CModule
 	 */
 	private function ProcessUninstall()
 	{
+        global $APPLICATION;
+
         $this->unRegisterEvents();
         ModuleManager::unRegisterModule($this->MODULE_ID);
-
-        global $APPLICATION, $errors;
-        $errors = $this->errors;
 
         $APPLICATION->IncludeAdminFile(Loc::getMessage("rover_regroup__uninstall_title"), $_SERVER['DOCUMENT_ROOT'] . getLocalPath("modules/". $this->MODULE_ID ."/install/unMessage.php"));
 	}

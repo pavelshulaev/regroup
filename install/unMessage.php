@@ -3,12 +3,18 @@
 
     if (!$errors)
     {
-        echo CAdminMessage::ShowNote(GetMessage("MOD_UNINST_OK"));
+        echo \CAdminMessage::ShowNote(GetMessage("MOD_UNINST_OK"));
     }
     else
     {
         $details = implode("<br/>", $errors);
-        echo CAdminMessage::ShowMessage(Array("TYPE"=>"ERROR", "MESSAGE" =>GetMessage("MOD_UNINST_ERR"), "DETAILS"=>$details, "HTML"=>true));
+        echo \CAdminMessage::ShowMessage(
+            Array(
+                "TYPE"=>"ERROR",
+                "MESSAGE" =>GetMessage("MOD_UNINST_ERR"),
+                "DETAILS"=>$details,
+                "HTML"=>true)
+        );
     }
 
 ?>
