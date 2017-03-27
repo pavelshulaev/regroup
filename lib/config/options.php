@@ -12,11 +12,9 @@ namespace Rover\Regroup\Config;
 use Bitrix\Main\SystemException;
 use Rover\Fadmin\Options as FadminOptions;
 use Bitrix\Main\Localization\Loc;
-use Rover\Fadmin\Presets;
 use Rover\Regroup\Events;
 use Rover\Fadmin\Tab;
 use Rover\Fadmin\Inputs\Input;
-use Rover\Regroup\Config\Tabs;
 
 if (!\Bitrix\Main\Loader::includeModule('rover.fadmin'))
 	throw new SystemException('rover.fadmin module not found');
@@ -190,9 +188,9 @@ class Options extends FadminOptions
 		$presetName = $inputName->getValue(true);
 
 		if (strlen($presetName))
-			$this->setPresetName($presetId, $presetName);
+			$this->preset->updateName($presetId, $presetName);
 		else {
-			$presetName = $this->getPresetNameById($presetId);
+			$presetName = $this->preset->getNameById($presetId);
 			$inputName->setValue($presetName);
 		}
 

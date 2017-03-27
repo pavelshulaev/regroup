@@ -26,7 +26,7 @@ class Presets
 	{
 		$resultPresets  = [];
 		$options        = Options::getInstance();
-		$presetsIds     = $options->getPresetsIds();
+		$presetsIds     = $options->preset->getIds();
 
 		foreach ($presetsIds as $presetId)
 		{
