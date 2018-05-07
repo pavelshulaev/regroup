@@ -24,7 +24,7 @@ class rover_regroup extends CModule
      */
     function __construct()
     {
-        global $errors;
+        global $regroupErrors;
 
 		$arModuleVersion = array();
 
@@ -35,7 +35,7 @@ class rover_regroup extends CModule
 			$this->MODULE_VERSION		= $arModuleVersion["VERSION"];
 			$this->MODULE_VERSION_DATE	= $arModuleVersion["VERSION_DATE"];
         } else
-	        $errors[] = Loc::getMessage('rover_regroup__version_info_error');
+	        $regroupErrors[] = Loc::getMessage('rover_regroup__version_info_error');
 
         $this->MODULE_NAME			= Loc::getMessage('rover_regroup__name');
         $this->MODULE_DESCRIPTION	= Loc::getMessage('rover_regroup__descr');
@@ -89,18 +89,18 @@ class rover_regroup extends CModule
 	 */
 	private function ProcessInstall()
     {
-        global $APPLICATION, $errors;
+        global $APPLICATION, $regroupErrors;
 
-        if (PHP_VERSION_ID < 50400)
-            $errors[] = Loc::getMessage('rover_regroup__php_version_error');
+        if (PHP_VERSION_ID < 50306)
+            $regroupErrors[] = Loc::getMessage('rover_regroup__php_version_error');
 
 	    if(!ModuleManager::isModuleInstalled('rover.fadmin'))
-		    $errors[] = Loc::getMessage('rover_regroup__rover-fadmin_not_found');
+		    $regroupErrors[] = Loc::getMessage('rover_regroup__rover-fadmin_not_found');
 
         if(!ModuleManager::isModuleInstalled('socialnetwork'))
-		    $errors[] = Loc::getMessage('rover_regroup__socialnetwork_not_found');
+		    $regroupErrors[] = Loc::getMessage('rover_regroup__socialnetwork_not_found');
 
-	    if (empty($errors)){
+	    if (empty($regroupErrors)){
             ModuleManager::registerModule($this->MODULE_ID);
 	        $this->registerEvents();
 	    }

@@ -13,6 +13,12 @@ namespace Rover\Regroup;
 use Bitrix\Main\ArgumentNullException;
 use Rover\Regroup\Config\Options;
 
+/**
+ * Class Group
+ *
+ * @package Rover\Regroup
+ * @author  Pavel Shulaev (https://rover-it.me)
+ */
 class Group
 {
 	const EVENT__SYS_JOIN   = 'JoinSys';
@@ -21,14 +27,16 @@ class Group
 	const QUERY__WORK_JOIN  = 'JoinWork';
 	const QUERY__WORK_LEAVE = 'LeaveWork';
 
-	/**
-	 * @param       $userId
-	 * @param array $joinedSysGroups
-	 * @param array $leavedSysGroups
-	 * @throws ArgumentNullException
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
-	public static function apply($userId, $joinedSysGroups = [], $leavedSysGroups = [])
+    /**
+     * @param       $userId
+     * @param array $joinedSysGroups
+     * @param array $leavedSysGroups
+     * @throws ArgumentNullException
+     * @throws \Bitrix\Main\ArgumentOutOfRangeException
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+	public static function apply($userId, $joinedSysGroups = array(), $leavedSysGroups = array())
 	{
 		if (!$userId)
 			throw new ArgumentNullException('userId');
@@ -41,7 +49,7 @@ class Group
 		//группы, в которых пользователь должен остаться
 		$stayWorkGroups = self::getWorkGroups(
 			array_diff(Events::getUserGroupsIds($userId), $leavedSysGroups),
-			[],
+			array(),
 			self::QUERY__WORK_JOIN);
 
 		self::removeFromWorkGroups($userId,
@@ -51,21 +59,22 @@ class Group
 			array_diff($joinedWorkGroups, $leavedWorkGroups));
 	}
 
-	/**
-	 * @param array  $joinedSysGroups
-	 * @param array  $leavedSysGroups
-	 * @param string $query
-	 * @return array
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
-	protected static function getWorkGroups($joinedSysGroups = [], $leavedSysGroups = [], $query = self::QUERY__WORK_JOIN)
+    /**
+     * @param array  $joinedSysGroups
+     * @param array  $leavedSysGroups
+     * @param string $query
+     * @return array
+     * @throws \Bitrix\Main\ArgumentOutOfRangeException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+	protected static function getWorkGroups($joinedSysGroups = array(), $leavedSysGroups = array(), $query = self::QUERY__WORK_JOIN)
 	{
 		$result = array_merge(
 			self::getWorkGroupsBySysGroups($joinedSysGroups, self::EVENT__SYS_JOIN, $query),
 			self::getWorkGroupsBySysGroups($leavedSysGroups, self::EVENT__SYS_LEAVE, $query)
 		);
 
-		return $result ? $result : [];
+		return $result ? $result : array();
 	}
 
 	/**
@@ -79,7 +88,7 @@ class Group
 	protected static function getWorkGroupsBySysGroups($sysGroups, $event = self::EVENT__SYS_JOIN, $query = self::QUERY__WORK_JOIN)
 	{
 		$presetsIds = Presets::getBySysGroupsIds($sysGroups);
-		$result     = [];
+		$result     = array();
 
 		foreach ($presetsIds as $presetId)
 			$result = array_merge($result,
@@ -89,13 +98,16 @@ class Group
 	}
 
 
-	/**
-	 * Добавляет пользователя к группам социальной сети
-	 * @param $userId
-	 * @param $workGroupsIds
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
-	private function addToWorkGroups($userId, $workGroupsIds)
+    /**
+     * Добавляет пользователя к группам социальной сети
+     *
+     * @param $userId
+     * @param $workGroupsIds
+     * @throws ArgumentNullException
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+	private static function addToWorkGroups($userId, $workGroupsIds)
 	{
 		foreach($workGroupsIds as $workGroupId)
 		{
@@ -103,18 +115,22 @@ class Group
 
 			if (!$userInWorkGroup)
 			{
-				$query = [
+			    global $USER;
+
+				$query = array(
 					"USER_ID"   => $userId,
 					"GROUP_ID"  => $workGroupId,
 					"ROLE"      => SONET_ROLES_USER, // как рядовой член
 					"=DATE_CREATE" => $GLOBALS["DB"]->CurrentTimeFunction(),
 					"=DATE_UPDATE" => $GLOBALS["DB"]->CurrentTimeFunction(),
 					"INITIATED_BY_TYPE" => SONET_INITIATED_BY_USER,
-					"INITIATED_BY_USER_ID" => \CUser::GetID(),
+					"INITIATED_BY_USER_ID" => $USER->GetID(),
 					"MESSAGE" => false,
-				];
+                );
 
-				if (\CSocNetUserToGroup::Add($query)) {
+				$sonetUserToGroup = new \CSocNetUserToGroup();
+
+				if ($sonetUserToGroup->Add($query)) {
 					Notifier::notify($userId, $workGroupId, Notifier::NOTIFY_ADDED);
 
 					// если разрешено, подключаем диск
@@ -125,13 +141,16 @@ class Group
 		}
 	}
 
-	/**
-	 * Удаляет полльзователя из групп социальной сети
-	 * @param $userId
-	 * @param $workGroupsIds
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
-	private function removeFromWorkGroups($userId, $workGroupsIds)
+    /**
+     * Удаляет полльзователя из групп социальной сети
+     *
+     * @param $userId
+     * @param $workGroupsIds
+     * @throws ArgumentNullException
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+	private static function removeFromWorkGroups($userId, $workGroupsIds)
 	{
 		foreach($workGroupsIds as $workGroupId)
 		{
@@ -178,11 +197,11 @@ class Group
 			throw new ArgumentNullException('workGroupId');
 
 		return \CSocNetUserToGroup::GetList(
-			["ID" => "ASC"],
-			['USER_ID' => $userId, 'GROUP_ID' => $workGroupId],
+			array("ID" => "ASC"),
+			array('USER_ID' => $userId, 'GROUP_ID' => $workGroupId),
 			false,
 			false,
-			['ID']
+			array('ID')
 		)->Fetch();
 	}
 }

@@ -13,18 +13,26 @@ namespace Rover\Regroup;
 use Rover\Regroup\Config\Options;
 use Bitrix\Main\ArgumentOutOfRangeException;
 
+/**
+ * Class Presets
+ *
+ * @package Rover\Regroup
+ * @author  Pavel Shulaev (https://rover-it.me)
+ */
 class Presets
 {
-	/**
-	 * ¬озвращает ид фильтров, которые действуют на пользовател€ напр€мую
-	 * —читаем, что список всех пресетов уже создан
-	 * @param $sysGroupsIds - группы, в которые входит пользователь
-	 * @return array - массив пресетов, действующих на пользовател€
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
-	public static function getBySysGroupsIds(array $sysGroupsIds = [])
+    /**
+     * ¬озвращает ид фильтров, которые действуют на пользовател€ напр€мую
+     * —читаем, что список всех пресетов уже создан
+     * @param array $sysGroupsIds
+     * @return array
+     * @throws \Bitrix\Main\ArgumentNullException
+     * @throws \Bitrix\Main\SystemException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+	public static function getBySysGroupsIds(array $sysGroupsIds = array())
 	{
-		$resultPresets  = [];
+		$resultPresets  = array();
 		$options        = Options::getInstance();
 		$presetsIds     = $options->preset->getIds();
 

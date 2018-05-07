@@ -1,15 +1,15 @@
 <?php
 use Bitrix\Main\Localization\Loc;
 
-global $APPLICATION, $errors; 
+global $APPLICATION, $regroupErrors; 
 
-if (empty($errors))
+if (empty($regroupErrors))
 {
     echo \CAdminMessage::ShowNote(Loc::getMessage("MOD_INST_OK"));
 }
 else
 {
-    $details = implode("<br/>", $errors);
+    $details = implode("<br/>", $regroupErrors);
     echo \CAdminMessage::ShowMessage(
         Array(
             "TYPE"      => "ERROR",

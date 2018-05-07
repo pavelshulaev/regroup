@@ -51,152 +51,158 @@ class Tabs
 	 */
 	protected static $workGroups;
 
-	/**
-	 * @return array
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @return array
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public static function get()
 	{
-		return [
+		return array(
 			self::getMain(),
 			self::getPreset()
-		];
+        );
 	}
 
-	/**
-	 * @return array
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @return array
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	protected static function getMain()
 	{
-		return [
+		return array(
 			'name'          => self::TAB__MAIN,
 			'label'         => Loc::getMessage(self::TAB__MAIN . '_label'),
 			'description'   => Loc::getMessage(self::TAB__MAIN . '_description'),
-			'inputs' => [
-				[
+			'inputs' => array(
+				array(
 					'type'      => Input::TYPE__CHECKBOX,
 					'name'      => self::INPUT__LEAVE_MODERATORS,
 					'label'     => Loc::getMessage(self::INPUT__LEAVE_MODERATORS . '_label')
-				],
-				[
+                ),
+				array(
 					'type'      => Input::TYPE__CHECKBOX,
 					'name'      => self::INPUT__CONNECT_DISC,
 					'label'     => Loc::getMessage(self::INPUT__CONNECT_DISC . '_label')
-				],
-				[
+                ),
+				array(
 					'type'      => Input::TYPE__SUBMIT,
 					'name'      => self::INPUT__REGROUP_ALL,
 					'label'     => Loc::getMessage(self::INPUT__REGROUP_ALL . '_label'),
 					'default'   => self::INPUT__REGROUP_ALL
-				],
-				[
+                ),
+				array(
 					'type'      => Input::TYPE__ADD_PRESET,
 					'name'      => self::INPUT__NEW_PRESET,
 					'label'     => Loc::getMessage(self::INPUT__NEW_PRESET . '_label'),
 					'popup'     => Loc::getMessage(self::INPUT__NEW_PRESET . '_popup'),
 					'default'   => Loc::getMessage(self::INPUT__NEW_PRESET . '_default'),
-				],
-			]
-		];
+                ),
+            )
+        );
 	}
 
-	/**
-	 * @return array
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @return array
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	protected static function getPreset()
 	{
-		return [
+		return array(
 			'name'          => self::TAB__PRESET,
 			'label'         => Loc::getMessage(self::TAB__PRESET . '_label'),
 			'description'   => Loc::getMessage(self::TAB__PRESET . '_description'),
 			'preset'        => true,
-			'inputs' => [
-				[
+			'inputs' => array(
+				array(
 					'type'      => Input::TYPE__HEADER,
 					'name'      => 'preset__header_common',
 					'label'     => Loc::getMessage('preset__header_common_label')
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__TEXT,
 					'name'      => self::INPUT__PRESET_NAME,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_NAME . '_label'),
 					'size'      => 35
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__CHECKBOX,
 					'name'      => self::INPUT__PRESET_ENABLED,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_ENABLED . '_label'),
 					'default'   => 'Y'
-				],
-				/*[
+				),
+				/*array(
 					'type'      => Input::TYPE__TEXT,
 					'name'      => self::INPUT__PRESET_SORT,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_SORT . '_label'),
 					'default'   => 100
-				],*/
-				[
+				),*/
+				array(
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_GROUP,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_GROUP . '_label'),
 					'options'   => self::getSysGroups()
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__HEADER,
 					'name'      => 'preset__header_join_sys',
 					'label'     => Loc::getMessage('preset__header_join_sys_label')
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_JOIN_SYS_JOIN_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_JOIN_SYS_JOIN_WORK . '_label'),
 					'options'   => self::getWorkGroups(),
 					'multiple'  => true,
 					'size'      => 5,
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_JOIN_SYS_LEAVE_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_JOIN_SYS_LEAVE_WORK . '_label'),
 					'options'   => self::getWorkGroups(),
 					'multiple'  => true,
 					'size'      => 5,
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__HEADER,
 					'name'      => 'preset__header_leave_sys',
 					'label'     => Loc::getMessage('preset__header_leave_sys_label')
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_LEAVE_SYS_LEAVE_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_LEAVE_SYS_LEAVE_WORK . '_label'),
 					'options'   => self::getWorkGroups(),
 					'multiple'  => true,
 					'size'      => 5,
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__SELECTBOX,
 					'name'      => self::INPUT__PRESET_LEAVE_SYS_JOIN_WORK,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_LEAVE_SYS_JOIN_WORK . '_label'),
 					'options'   => self::getWorkGroups(),
 					'multiple'  => true,
 					'size'      => 5,
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__HEADER,
 					'name'      => 'preset__header_remove',
 					'label'     => Loc::getMessage('preset__header_remove_label')
-				],
-				[
+				),
+				array(
 					'type'      => Input::TYPE__REMOVE_PRESET,
 					'name'      => self::INPUT__PRESET_REMOVE,
 					'label'     => Loc::getMessage(self::INPUT__PRESET_REMOVE . '_label'),
 					'popup'     => Loc::getMessage(self::INPUT__PRESET_REMOVE . '_popup'),
-				]
-			]
-		];
+				)
+			)
+		);
 	}
 
 	/**
@@ -207,13 +213,13 @@ class Tabs
 	public static function getSysGroups()
 	{
 		if (is_null(self::$sysGroups)) {
-			$query = [
-				'order' => ['ID' => 'ASC'],
-				'select' => ['ID', 'NAME']
-			];
+			$query = array(
+				'order' => array('ID' => 'ASC'),
+				'select' => array('ID', 'NAME')
+			);
 
 			$sysGroups  = \Bitrix\Main\GroupTable::getList($query);
-			self::$sysGroups     = [];
+			self::$sysGroups     = array();
 
 			while($sysGroup = $sysGroups->fetch())
 				self::$sysGroups[$sysGroup['ID']]
@@ -223,13 +229,13 @@ class Tabs
 		return self::$sysGroups;
 	}
 
-	/**
-	 * @return array
-	 * @throws SystemException
-	 * @throws \Bitrix\Main\ArgumentException
-	 * @throws \Bitrix\Main\LoaderException
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @return array
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public static function getWorkGroups()
 	{
 		if (!Loader::includeModule('socialnetwork'))
@@ -237,13 +243,13 @@ class Tabs
 
 		if (is_null(self::$workGroups)) {
 
-			$query = [
-				'order'     => ['ID' => 'ASC'],
-				'select'    => ['ID', 'NAME']
-			];
+			$query = array(
+				'order'     => array('ID' => 'ASC'),
+				'select'    => array('ID', 'NAME')
+			);
 
 			$workGroups = \Bitrix\Socialnetwork\WorkgroupTable::getList($query);
-			self::$workGroups = [0 => Loc::getMessage('REGROUP__NOT_SET')];
+			self::$workGroups = array(0 => Loc::getMessage('REGROUP__NOT_SET'));
 
 			while($workGroup = $workGroups->fetch())
 				self::$workGroups[$workGroup['ID']]

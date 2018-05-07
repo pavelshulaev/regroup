@@ -21,43 +21,44 @@ if (!\Bitrix\Main\Loader::includeModule('rover.fadmin'))
 
 Loc::loadMessages(__FILE__);
 
+/**
+ * Class Options
+ *
+ * @package Rover\Regroup\Config
+ * @author  Pavel Shulaev (https://rover-it.me)
+ */
 class Options extends FadminOptions
 {
 	const MODULE_ID = 'rover.regroup';
 
-	protected $cache = [];
 	/**
 	 * Кеш детального описания рабочих групп
 	 * @var array
 	 */
-	protected $socNetGroups = [];
+	protected $socNetGroups = array();
 
-	/**
-	 * Кеш айдишников всех активных юзеров
-	 * @var array
-	 */
-	protected $allUsersIds;
-
-	/**
-	 * @return static
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
-	public static function getInstance()
+    /**
+     * @param string $moduleId
+     * @return static|self|FadminOptions
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
+	public static function getInstance($moduleId = self::MODULE_ID)
 	{
-		return parent::getInstance(self::MODULE_ID);
+		return parent::getInstance($moduleId);
 	}
 
-	/**
-	 * @return array
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @return array|mixed
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public function getConfig()
 	{
-		$tabs = Tabs::get();
-
-		return [
-			'tabs' => $tabs
-		];
+		return array(
+            'tabs' => Tabs::get()
+        );
 	}
 
 	/**
@@ -92,69 +93,83 @@ class Options extends FadminOptions
 		return $this->getNormalValue(Tabs::INPUT__CONNECT_DISC);
 	}
 
-	/**
-	 * @param $presetId
-	 * @return mixed|null
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @param $presetId
+     * @return mixed
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentNullException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public function getPresetEnabled($presetId)
 	{
 		return $this->getPresetValue(Tabs::INPUT__PRESET_ENABLED, $presetId);
 	}
 
-	/**
-	 * @param $presetId
-	 * @return mixed|null
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @param $presetId
+     * @return mixed
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentNullException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public function getPresetGroup($presetId)
 	{
 		return $this->getPresetValue(Tabs::INPUT__PRESET_GROUP, $presetId);
 	}
 
-	/**
-	 * @param $presetId
-	 * @return mixed|null
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @param $presetId
+     * @return mixed
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentNullException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public function getPresetJoinSysJoinWork($presetId)
 	{
 		return $this->getPresetValue(Tabs::INPUT__PRESET_JOIN_SYS_JOIN_WORK, $presetId);
 	}
 
-	/**
-	 * @param $presetId
-	 * @return mixed|null
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @param $presetId
+     * @return mixed
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentNullException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public function getPresetJoinSysLeaveWork($presetId)
 	{
 		return $this->getPresetValue(Tabs::INPUT__PRESET_JOIN_SYS_LEAVE_WORK, $presetId);
 	}
 
-	/**
-	 * @param $presetId
-	 * @return mixed|null
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @param $presetId
+     * @return mixed
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentNullException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public function getPresetLeaveSysJoinWork($presetId)
 	{
 		return $this->getPresetValue(Tabs::INPUT__PRESET_LEAVE_SYS_JOIN_WORK, $presetId);
 	}
 
-	/**
-	 * @param $presetId
-	 * @return mixed|null
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @param $presetId
+     * @return mixed
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentNullException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public function getPresetLeaveSysLeaveWork($presetId)
 	{
 		return $this->getPresetValue(Tabs::INPUT__PRESET_LEAVE_SYS_LEAVE_WORK, $presetId);
 	}
 
-	/**
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentNullException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	protected function beforeGetRequest()
 	{
 		$request = \Bitrix\Main\Application::getInstance()
@@ -166,10 +181,12 @@ class Options extends FadminOptions
 		Events::update();
 	}
 
-	/**
-	 * @param $params
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @param array $params
+     * @throws SystemException
+     * @throws \Bitrix\Main\ArgumentNullException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	protected function beforeGetTabInfo(array &$params)
 	{
 		/**

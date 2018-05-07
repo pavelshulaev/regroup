@@ -13,13 +13,24 @@ namespace Rover\Regroup;
 use Bitrix\Main\ArgumentNullException;
 use Bitrix\Main\UserTable;
 
+/**
+ * Class Events
+ *
+ * @package Rover\Regroup
+ * @author  Pavel Shulaev (https://rover-it.me)
+ */
 class Events
 {
-	protected static $groups = [];
-	/**
-	 * @throws ArgumentNullException
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @var array
+     */
+	protected static $groups = array();
+	
+    /**
+     * @throws ArgumentNullException
+     * @throws \Bitrix\Main\ArgumentException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public static function update()
 	{
 		$usersIds = self::getAllUsersIds();
@@ -28,11 +39,13 @@ class Events
 			Group::apply($userId, self::getUserGroupsIds($userId));
 	}
 
-	/**
-	 * Применяем правила по всем пришедшим группам
-	 * @param $params
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * Применяем правила по всем пришедшим группам
+     *
+     * @param $params
+     * @throws ArgumentNullException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public static function onAfterUserAdd($params)
 	{
 		if (!isset($params['ID']) || !intval($params['ID']))
@@ -77,7 +90,7 @@ class Events
 		if (!isset($params['GROUP_ID']))
 			return null;
 
-		$updatedSysGroupsIds = [];
+		$updatedSysGroupsIds = array();
 
 		foreach ($params['GROUP_ID'] as $group)
 			$updatedSysGroupsIds[] = $group['GROUP_ID'];
@@ -102,24 +115,25 @@ class Events
 			throw new ArgumentNullException('userId');
 
 		if (!isset(self::$groups[$userId]))
-			self::$groups[$userId] = array_diff(\CUser::GetUserGroup($userId), [2]);
+			self::$groups[$userId] = array_diff(\CUser::GetUserGroup($userId), array(2));
 
 		return self::$groups[$userId];
 	}
 
-	/**
-	 * @return array
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @return array
+     * @throws \Bitrix\Main\ArgumentException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public static function getAllUsersIds()
 	{
-		$query  = [
-			'filter' => ['ACTIVE' => 'Y'],
-			'select' => ['ID']
-		];
+		$query  = array(
+			'filter' => array('ACTIVE' => 'Y'),
+			'select' => array('ID')
+        );
 
 		$users  = UserTable::getList($query);
-		$result = [];
+		$result = array();
 
 		while ($user = $users->fetch())
 			$result[] = $user['ID'];

@@ -12,26 +12,35 @@ namespace Rover\Regroup;
 
 use Bitrix\Main\Localization\Loc;
 use Rover\Regroup\Config\Options;
+use \Bitrix\Main\Loader;
 
 Loc::loadMessages(__FILE__);
 
+/**
+ * Class Notifier
+ *
+ * @package Rover\Regroup
+ * @author  Pavel Shulaev (https://rover-it.me)
+ */
 class Notifier
 {
 	const NOTIFY_ADDED      = 'notify_added';  // уведомить о добавлении в группу
 	const NOTIFY_DELETED    = 'notify_deleted';  // уведомить о удалении из группы
 
-	/**
-	 * Высылает оповещение о добавлении/удалении из раб. группы
-	 * @param      $userId
-	 * @param      $socNetGroupId
-	 * @param      $status
-	 * @return bool|int
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * Высылает оповещение о добавлении/удалении из раб. группы
+     *
+     * @param $userId
+     * @param $socNetGroupId
+     * @param $status
+     * @return bool
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public static function notify($userId, $socNetGroupId, $status)
 	{
 		// Если не подключен подуль мгновенных сообщений, то выходи
-		if (!\Bitrix\Main\Loader::includeModule('im'))
+		if (!Loader::includeModule('im'))
 			return false;
 
 		// Если не передан статус или поль-ль или группа, то тоже выходим
@@ -44,7 +53,7 @@ class Notifier
 		if (empty($groupLink))
 			return false;
 
-		$fields = [];
+		$fields = array();
 
 		switch($status){
 			case self::NOTIFY_ADDED:

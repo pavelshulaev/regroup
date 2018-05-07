@@ -11,19 +11,26 @@
 namespace Rover\Regroup;
 
 use Rover\Regroup\Config\Options;
-
+use \Bitrix\Main\Loader;
+/**
+ * Class Disc
+ *
+ * @package Rover\Regroup
+ * @author  Pavel Shulaev (https://rover-it.me)
+ */
 class Disc
 {
 	const DISC_CONNECTED      = 'connected';    // флаг подключения диска
 	const DISC_DISCONNECTED   = 'disconnected'; // флаг отключения диска
 
-	/**
-	 * Подключаем диск
-	 * @param $userId
-	 * @param $socNetGroupId
-	 * @return bool|int
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * Подключаем диск
+     * @param $userId
+     * @param $socNetGroupId
+     * @return bool|int
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public static function connect($userId, $socNetGroupId)
 	{
 		$params = self::getParams($userId, $socNetGroupId);
@@ -37,7 +44,7 @@ class Disc
 			|| empty($targetSectionData))
 			return false;
 
-		$linkData = [
+		$linkData = array(
 			'ID'            => $attachSectionData['SECTION_ID'],
 			'IBLOCK_ID'     => $attachSectionData['IBLOCK_ID'],
 			'NAME'          => \CWebDavIblock::correctName(
@@ -48,19 +55,20 @@ class Disc
 			'INVITE_USER_ID' => $params['attachToUserId'],
 			//'CAN_EDIT' => $params['canEdit'],
 			'CAN_FORWARD'   => 0,
-		];
+        );
 
 		return \CWebDavSymlinkHelper::createSymLinkSection(
 			$targetSectionData, $linkData, $params['attachObject']['type']);
 	}
 
-	/**
-	 * Отключаем диск
-	 * @param $userId
-	 * @param $socNetGroupId
-	 * @return bool
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * Отключаем диск
+     * @param $userId
+     * @param $socNetGroupId
+     * @return bool
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public static function disconnect($userId, $socNetGroupId)
 	{
 		$params = self::getParams($userId, $socNetGroupId);
@@ -98,23 +106,25 @@ class Disc
 		return true;
 	}
 
-	/**
-	 * Возвращает массив параметров, делая при этом проверку ненулевости входящих значений
-	 * @param $userId
-	 * @param $socNetGroupId
-	 * @return array|bool
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * Возвращает массив параметров, делая при этом проверку ненулевости входящих значений
+     *
+     * @param $userId
+     * @param $socNetGroupId
+     * @return array|bool
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	private static function getParams($userId, $socNetGroupId)
 	{
-		if(!\Bitrix\Main\Loader::includeModule('webdav')
-			|| !\Bitrix\Main\Loader::includeModule('iblock'))
+		if(!Loader::includeModule('webdav')
+			|| !Loader::includeModule('iblock'))
 			return false;
 
 		if (!self::checkFields($userId, $socNetGroupId))
 			return false;
 
-		return [
+		return array(
 			//'ajax'          => true,
 			//'action'        => $sAction,
 			'attachObject'  => array(
@@ -124,15 +134,15 @@ class Disc
 			'attachToUserId'    => $userId,
 			'inviteFromUserId'  => $userId,
 			'canEdit'           => 1
-		];
+        );
 	}
 
-	/**
-	 * Получаем координаты в инфоблоках для группы
-	 * @param $params
-	 * @return bool
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * Получаем координаты в инфоблоках для группы
+     * @param $params
+     * @return array
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	private static function getAttachSectionData($params)
 	{
 		$group      = Options::getInstance()->getSocNetGroupById($params['attachObject']['id']);
@@ -147,15 +157,15 @@ class Disc
 		{
 			$groupSectionId = \CIBlockWebdavSocnet::getSectionId($iblockId, 'group', $params['attachObject']['id']);
 			if ($groupSectionId) {
-				return [
+				return array(
 					'IBLOCK_ID'         => $iblockId,
 					'SECTION_ID'        => $groupSectionId,
 					'SOCNET_GROUP_ID'   => $params['attachObject']['id']
-				];
+                );
 			}
 		}
 
-		return [];
+		return array();
 	}
 
 	/**
@@ -178,14 +188,14 @@ class Disc
 		{
 			$userSectionId = \CWebDavIblock::getRootSectionIdForUser($iblockId, $params['attachToUserId']);
 			if ($userSectionId)
-				return [
+				return array(
 					'IBLOCK_ID'         => $iblockId,
 					'SECTION_ID'        => $userSectionId,
 					'IBLOCK_SECTION_ID' => $userSectionId,
-				];
+                );
 
 		}
 
-		return [];
+		return array();
 	}
 }

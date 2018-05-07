@@ -1,13 +1,13 @@
 <?php
-    global $APPLICATION, $errors;
+    global $APPLICATION, $regroupErrors;
 
-    if (!$errors)
+    if (!$regroupErrors)
     {
         echo \CAdminMessage::ShowNote(GetMessage("MOD_UNINST_OK"));
     }
     else
     {
-        $details = implode("<br/>", $errors);
+        $details = implode("<br/>", $regroupErrors);
         echo \CAdminMessage::ShowMessage(
             Array(
                 "TYPE"=>"ERROR",

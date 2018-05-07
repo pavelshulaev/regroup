@@ -1,6 +1,6 @@
 <?php
 use Bitrix\Main\Localization\Loc;
-use \Rover\Fadmin\Admin\Panel;
+use \Rover\Fadmin\Layout\Admin\Form;
 use \Rover\Regroup\Config\Options;
 use \Bitrix\Main\Loader;
 use \Bitrix\Main\SystemException;
@@ -12,4 +12,5 @@ if (!Loader::includeModule($mid)
 Loc::LoadMessages(__FILE__);
 Loc::loadMessages($_SERVER["DOCUMENT_ROOT"] . "/bitrix/modules/main/options.php");
 
-(new Panel(Options::getInstance()))->show();
+$form = new Form(Options::getInstance());
+$form->show();
