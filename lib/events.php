@@ -21,14 +21,14 @@ use Bitrix\Main\UserTable;
  */
 class Events
 {
-    /**
-     * @var array
-     */
+    /** @var array */
 	protected static $groups = array();
-	
+
     /**
      * @throws ArgumentNullException
      * @throws \Bitrix\Main\ArgumentException
+     * @throws \Bitrix\Main\ArgumentOutOfRangeException
+     * @throws \Bitrix\Main\LoaderException
      * @author Pavel Shulaev (https://rover-it.me)
      */
 	public static function update()
@@ -44,6 +44,8 @@ class Events
      *
      * @param $params
      * @throws ArgumentNullException
+     * @throws \Bitrix\Main\ArgumentOutOfRangeException
+     * @throws \Bitrix\Main\LoaderException
      * @author Pavel Shulaev (https://rover-it.me)
      */
 	public static function onAfterUserAdd($params)
@@ -54,12 +56,13 @@ class Events
 		Group::apply($params['ID'], self::getUpdatedGroupsIds($params));
 	}
 
-
-	/**
-	 * @param $params
-	 * @throws ArgumentNullException
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @param $params
+     * @throws ArgumentNullException
+     * @throws \Bitrix\Main\ArgumentOutOfRangeException
+     * @throws \Bitrix\Main\LoaderException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	public static function onBeforeUserUpdate($params)
 	{
 		if (!isset($params['ID']))

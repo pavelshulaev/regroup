@@ -30,9 +30,15 @@ class Presets
      * @throws \Bitrix\Main\SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
-	public static function getBySysGroupsIds(array $sysGroupsIds = array())
+	public static function getBySysGroupsIds($sysGroupsIds = array())
 	{
-		$resultPresets  = array();
+		$resultPresets = array();
+		if (empty($sysGroupsIds))
+		    return $resultPresets;
+
+		if (!is_array($sysGroupsIds))
+		    $sysGroupsIds = [$sysGroupsIds];
+
 		$options        = Options::getInstance();
 		$presetsIds     = $options->preset->getIds();
 

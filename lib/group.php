@@ -64,7 +64,9 @@ class Group
      * @param array  $leavedSysGroups
      * @param string $query
      * @return array
+     * @throws ArgumentNullException
      * @throws \Bitrix\Main\ArgumentOutOfRangeException
+     * @throws \Bitrix\Main\SystemException
      * @author Pavel Shulaev (https://rover-it.me)
      */
 	protected static function getWorkGroups($joinedSysGroups = array(), $leavedSysGroups = array(), $query = self::QUERY__WORK_JOIN)
@@ -77,14 +79,16 @@ class Group
 		return $result ? $result : array();
 	}
 
-	/**
-	 * @param        $sysGroups
-	 * @param string $event
-	 * @param string $query
-	 * @return array
-	 * @throws \Bitrix\Main\ArgumentOutOfRangeException
-	 * @author Pavel Shulaev (http://rover-it.me)
-	 */
+    /**
+     * @param        $sysGroups
+     * @param string $event
+     * @param string $query
+     * @return array
+     * @throws ArgumentNullException
+     * @throws \Bitrix\Main\ArgumentOutOfRangeException
+     * @throws \Bitrix\Main\SystemException
+     * @author Pavel Shulaev (https://rover-it.me)
+     */
 	protected static function getWorkGroupsBySysGroups($sysGroups, $event = self::EVENT__SYS_JOIN, $query = self::QUERY__WORK_JOIN)
 	{
 		$presetsIds = Presets::getBySysGroupsIds($sysGroups);
